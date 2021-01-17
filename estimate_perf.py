@@ -56,7 +56,7 @@ st.title('Performance Estimation')
 
 #Targetting Process Node
 #Unit: [%]
-process_node = st.sidebar.slider('Process Node [nm]', 1, 65, Baseline_Process)
+process_node = st.sidebar.slider('Process Node [nm]', 3, 65, Baseline_Process)
 st.text('Process Node [nm]          %s' % process_node)
 
 #Scale Factor
@@ -64,13 +64,14 @@ scale_factor = float(Baseline_Process) / float(process_node)
 
 ##Area [45nm]
 #Chip Area
-chip_area = st.sidebar.slider('Chip Area [mm**2]', 1, Baseline_Chip_Area*8, Baseline_Chip_Area)
+chip_area = st.sidebar.slider('Chip Area [mm**2]', 1, 900, Baseline_Chip_Area)
 st.text('Chip Area [mm**2]          %s' % chip_area)
 
 
 st.subheader('Area for Integer')
 #Unit: [um**2]
 area_Int_add_08b = int(np.ceil(float(Baseline_Area_Add_Int_8bit) / float(scale_factor)))
+st.text('Adder  (8-bit) [um**2]     %s' % area_Int_add_08b)
 
 area_Int_add_16b = int(np.ceil(float(Baseline_Area_Add_Int_16bit) / float(scale_factor)))
 st.text('Adder (16-bit) [um**2]     %s' % area_Int_add_16b)
@@ -91,7 +92,7 @@ st.text('Multiplier (32-bit) [um**2]%s' % area_Int_mlt_32b)
 #Unit: [pJ]
 st.subheader('Energy Consumption for Interger')
 energy_Int_add_08b = float(Baseline_Energy_Add_Int_8bit) / float(scale_factor)
-st.text('Adder (8-bit) [pJ]         %s' % energy_Int_add_08b)
+st.text('Adder  (8-bit) [pJ]        %s' % energy_Int_add_08b)
 
 energy_Int_add_16b = float(Baseline_Energy_Add_Int_16bit) / float(scale_factor)
 st.text('Adder (16-bit) [pJ]        %s' % energy_Int_add_16b)
@@ -110,10 +111,10 @@ st.text('Multiplier (32-bit) [pJ]   %s' % energy_Int_mlt_32b)
 
 
 st.subheader('Area for Floating-Point')
-area_Fp_add_16b = int(np.ceil(float(Baseline_Area_Add_Fp_16bit) / float(scale_factor**2)))
+area_Fp_add_16b = int(np.ceil(float(Baseline_Area_Add_Fp_16bit) / float(scale_factor)))
 st.text('Adder (16-bit) [um**2]     %s' % area_Fp_add_16b)
 
-area_Fp_add_32b = int(np.ceil(float(Baseline_Area_Add_Fp_32bit) / float(scale_factor**2)))
+area_Fp_add_32b = int(np.ceil(float(Baseline_Area_Add_Fp_32bit) / float(scale_factor)))
 st.text('Adder (32-bit) [um**2]     %s' % area_Fp_add_32b)
 
 area_Fp_mlt_16b = int(np.ceil(float(Baseline_Area_Mlt_Fp_16bit) / float(scale_factor**2)))
@@ -123,10 +124,10 @@ area_Fp_mlt_32b = int(np.ceil(float(Baseline_Area_Mlt_Fp_32bit) / float(scale_fa
 st.text('Multiplier (32-bit) [um**2]%s' % area_Fp_mlt_32b)
 
 st.subheader('Energy Consumption for Floating-Point')
-energy_Fp_add_16b = float(Baseline_Energy_Add_Fp_16bit) / float(scale_factor**2)
+energy_Fp_add_16b = float(Baseline_Energy_Add_Fp_16bit) / float(scale_factor)
 st.text('Adder (16-bit) [pJ]        %s' % energy_Fp_add_16b)
 
-energy_Fp_add_32b = float(Baseline_Energy_Add_Fp_32bit) / float(scale_factor**2)
+energy_Fp_add_32b = float(Baseline_Energy_Add_Fp_32bit) / float(scale_factor)
 st.text('Adder (32-bit) [pJ]        %s' % energy_Fp_add_32b)
 
 energy_Fp_mlt_16b = float(Baseline_Energy_Mlt_Fp_16bit) / float(scale_factor**2)
@@ -136,7 +137,7 @@ energy_Fp_mlt_32b = float(Baseline_Energy_Mlt_Fp_32bit) / float(scale_factor**2)
 st.text('Multiplier (32-bit) [pJ]   %s' % energy_Fp_mlt_32b)
 
 st.subheader('Area')
-effective_area_rate = st.sidebar.slider('Effective Area [mm**2]', 0.0, 100.0, 90.0)
+effective_area_rate = st.sidebar.slider('Effective Area [mm**2]', 0.0, 100.0, 80.0)
 effective_chip_area = chip_area * effective_area_rate / 100.0
 st.text('Effective Area [mm**2]     %s' % effective_chip_area)
 
@@ -198,8 +199,8 @@ max_num_mac_Fp_32m32a = int(np.floor(float(effective_chip_area_um) / float(area_
 num_mac_Fp_32m32a = st.sidebar.slider('Float 32b Mlt and 32b Add', 0, max_num_mac_Fp_32m32a, 0)
 
 
-st.sidebar.subheader('SRAM')
-st.subheader('SRAM')
+st.sidebar.subheader('On-Chip SRAM')
+st.subheader('On-Chip SRAM')
 size_sram = st.sidebar.slider('SRAM Size [KiB]', 0, 256, 0)
 st.text('SRAM Size [KiB]            %s' % size_sram)
 
@@ -215,7 +216,7 @@ st.text('Number of SRAMs            %s' % num_sram)
 
 st.subheader('Total Area for Integer Unit')
 total_area_Int_add_08b = area_Int_add_08b * num_Int_add_08b
-st.text('Adder (8-bit) [um**2]      %s' % total_area_Int_add_08b)
+st.text('Adder  (8-bit) [um**2]     %s' % total_area_Int_add_08b)
 
 total_area_Int_add_16b = area_Int_add_16b * num_Int_add_16b
 st.text('Adder (16-bit) [um**2]     %s' % total_area_Int_add_16b)
@@ -224,7 +225,7 @@ total_area_Int_add_32b = area_Int_add_32b * num_Int_add_32b
 st.text('Adder (32-bit) [um**2]     %s' % total_area_Int_add_32b)
 
 total_area_Int_mlt_08b = area_Int_mlt_08b * num_Int_mlt_08b
-st.text('Multiplier (8-bit) [um**2] %s' % total_area_Int_mlt_08b)
+st.text('Multiplier  (8-bit) [um**2]%s' % total_area_Int_mlt_08b)
 
 total_area_Int_mlt_16b = area_Int_mlt_16b * num_Int_mlt_16b
 st.text('Multiplier (16-bit) [um**2]%s' % total_area_Int_mlt_16b)
@@ -247,7 +248,7 @@ st.text('Multiplier (32-bit) [um**2]%s' % total_area_Fp_mlt_32b)
 
 st.subheader('Total Area for Integer MACs w/o SRAMs')
 total_area_Int_mac_08m32a = float(num_mac_Int_08m32a) * float(area_Int_add_08b + area_Int_add_32b) / 1000000.0
-st.text('8b Mlt and 32b Add [mm**2]         %s' % total_area_Int_mac_08m32a)
+st.text(' 8b Mlt and 32b Add [mm**2]        %s' % total_area_Int_mac_08m32a)
 area_ratio_Int_mac_08m32a = (total_area_Int_mac_08m32a * 100.0 / effective_chip_area)
 st.text('Percentile in Effective Chip Area  %s' % area_ratio_Int_mac_08m32a)
 
@@ -266,7 +267,7 @@ if num_mac_Int_08m32a <= 0.0:
     total_area_Int_mac_08m32a_sram = 0.0
 else:
     total_area_Int_mac_08m32a_sram = ((float(num_mac_Int_08m32a) * float(area_Int_add_08b + area_Int_add_32b)) + float(num_sram * float(area_sram))) / 1000000.0
-st.text('8b Mlt and 32b Add [um**2]         %s' % total_area_Int_mac_08m32a_sram)
+st.text(' 8b Mlt and 32b Add [um**2]        %s' % total_area_Int_mac_08m32a_sram)
 area_ratio_Int_mac_08m32a_sram = (total_area_Int_mac_08m32a_sram * 100.0 / effective_chip_area)
 st.text('Percentile in Effective Chip Area  %s' % area_ratio_Int_mac_08m32a_sram)
 
