@@ -52,7 +52,7 @@ Baseline_Area_SRAM_Cell         = 0.299
 Baseline_Energy_SRAM_Cell       = 0.00007629394
 
 
-st.title('Performance Estimation')
+st.title('Logic Cost Estimation')
 
 #Targetting Process Node
 #Unit: [%]
